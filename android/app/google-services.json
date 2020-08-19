@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "377107412979",
+    "firebase_url": "https://gold-kost.firebaseio.com",
+    "project_id": "gold-kost",
+    "storage_bucket": "gold-kost.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377107412979:android:b2efec0394f6633fc18486",
+        "android_client_info": {
+          "package_name": "com.mesyella.goldKost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377107412979-t5qn671s3vrgae2fh29944eqkjs8dd8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvkYosf21cJ_MX7TrjPQjWBqBoisL1StE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377107412979-t5qn671s3vrgae2fh29944eqkjs8dd8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
