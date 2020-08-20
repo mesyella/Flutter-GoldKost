@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+final db = FirebaseDatabase.instance.reference();
 
 class edit extends StatefulWidget {
   final String lantaiberapa;
-  edit(this.lantaiberapa);
+  final String nomorkamar;
+
+  edit(this.lantaiberapa, this.nomorkamar);
+
   @override
   _editState createState() => _editState();
-
 }
 
 class _editState extends State<edit> {
+  var apa;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,15 +43,15 @@ class _editState extends State<edit> {
               decoration: BoxDecoration(
                 color: navy,
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(150),
-                    bottomRight: Radius.circular(150)),
+                  topRight: Radius.circular(150),
+                ),
               ),
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30,20,0,0),
+                    padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
                     child: Text(
-                      '03',
+                      widget.nomorkamar,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 50,
@@ -53,22 +60,19 @@ class _editState extends State<edit> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(100)),
-                      ),
-                    ),
-                  ),
                   Positioned(
                     bottom: 100,
                     child: FlatButton(
+                      onPressed: (){
+                        db.child('1').once().then((DataSnapshot snapshot){
+                          print('Data: ${snapshot.value}');
+                          print(snapshot.key);
+                          setState(() {
+                            Map<dynamic,dynamic> values = snapshot.value;
+                            values.forEach((key, value) { lists.add(values)})
+                          });
+                        });
+                      },
                       child: Container(
                         height: 50,
                         width: 150,
@@ -90,10 +94,13 @@ class _editState extends State<edit> {
                       ),
                     ),
                   ),
+                  Text(
+                    apa ?? '1', style: TextStyle(color: white),
+                  ),
                   Positioned(
                     bottom: 30,
                     child: FlatButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pop(context);
                       },
                       child: Container(

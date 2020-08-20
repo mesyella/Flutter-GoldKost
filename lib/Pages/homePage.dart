@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
-import 'package:goldkost/Pages/lantai.dart';
+import 'package:goldkost/Pages/detailKamar.dart';
+import 'package:goldkost/Pages/cekKamar.dart';
 
 Widget pilihLantai(lantai) {
   return Container(
@@ -39,7 +40,7 @@ class _homePageState extends State<homePage> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(220, 10, 0, 5),
+              padding: const EdgeInsets.fromLTRB(220, 10, 0, 25),
               child: Text(
                 'Gold Kost',
                 style: TextStyle(
@@ -50,9 +51,6 @@ class _homePageState extends State<homePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
             Container(
               height: MediaQuery.of(context).size.height -
                   0.131 * MediaQuery.of(context).size.height,
@@ -60,8 +58,8 @@ class _homePageState extends State<homePage> {
               decoration: BoxDecoration(
                 color: navy,
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(150),
-                    bottomRight: Radius.circular(150)),
+                  topRight: Radius.circular(150),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,61 +128,65 @@ class _homePageState extends State<homePage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 30, 0, 30),
-                    child: Text(
-                      'Daftar Kamar',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: white,
+                    padding: const EdgeInsets.fromLTRB(30, 40, 0, 0),
+                    child: FlatButton(
+                      child: Container(
+                        height: 100,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Cek Kamar',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: navy,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
-                    child: InkWell(
-                      child: pilihLantai('1'),
-                      onTap: () {
+                      onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => lantaiPage(lantaiberapa: '1',)),
+                          MaterialPageRoute(
+                            builder: (context) => cekKamar(),
+                          ),
                         );
                       },
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
-                    child: InkWell(
-                      child: pilihLantai('2'),
-                      onTap: () {
+                    padding: const EdgeInsets.fromLTRB(30, 40, 0, 0),
+                    child: FlatButton(
+                      child: Container(
+                        height: 100,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Detail Kamar',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: navy,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => lantaiPage(lantaiberapa: '2',)),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
-                    child: InkWell(
-                      child: pilihLantai('3'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => lantaiPage(lantaiberapa: '3',)),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
-                    child: InkWell(
-                      child: pilihLantai('4'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => lantaiPage(lantaiberapa: '4',)),
+                          MaterialPageRoute(
+                            builder: (context) => detailKamar(),
+                          ),
                         );
                       },
                     ),
