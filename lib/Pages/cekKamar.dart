@@ -3,17 +3,43 @@ import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/homePage.dart';
 import 'package:goldkost/Pages/cekKamarDetail.dart';
 
-class cekKamar extends StatelessWidget {
+class cekKamar extends StatefulWidget {
+  List floorList;
+  cekKamar({this.floorList});
+  @override
+  _cekKamarState createState() => _cekKamarState(floorList);
+}
+
+class _cekKamarState extends State<cekKamar> {
+  List floorList;
   List floorList1;
   List floorList2;
   List flootList3;
-  int isi1 = 0;
-  int isi2 =0;
-  int isi3 =0;
-  int kosong1 = 0;
-  int kosong2 = 0;
-  int kosong3 = 0;
-  cekKamar({this.floorList1, this.floorList2, this.flootList3,this.isi1, this.isi2, this.isi3, this.kosong1, this.kosong2, this.kosong3});
+  _cekKamarState(this.floorList);
+  List jumlahSemua = List(3);
+  int isi;
+  int kosong;
+
+  Future moveToCekKamarDetail(context, i) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              cekKamarDetail(
+                lantaiberapa: i, floorList: floorList[i - 1],
+              )),
+    );
+  }
+
+
+  @override
+  void initState() {
+     floorList1 = floorList[0];
+     floorList2 = floorList[1];
+     flootList3 = floorList[2];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,13 +112,7 @@ class cekKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('1'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => cekKamarDetail(
-                                lantaiberapa: '1', floorList: floorList1,isi: isi1, kosong: kosong1,
-                              )),
-                        );
+                        moveToCekKamarDetail(context, 1);
                       },
                     ),
                   ),
@@ -101,13 +121,7 @@ class cekKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('2'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => cekKamarDetail(
-                                lantaiberapa: '2',floorList: floorList2 ,isi: isi2, kosong: kosong2,
-                              )),
-                        );
+                        moveToCekKamarDetail(context, 2);
                       },
                     ),
                   ),
@@ -116,13 +130,7 @@ class cekKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('3'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => cekKamarDetail(
-                                lantaiberapa: '3',floorList: flootList3, isi: isi3, kosong: kosong3,
-                              )),
-                        );
+                        moveToCekKamarDetail(context, 3);
                       },
                     ),
                   ),
@@ -135,3 +143,5 @@ class cekKamar extends StatelessWidget {
     );
   }
 }
+
+

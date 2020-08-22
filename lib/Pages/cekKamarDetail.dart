@@ -41,18 +41,31 @@ Widget kamarCek(String nomor, bool isi) {
 
 
 class cekKamarDetail extends StatefulWidget {
-  final String lantaiberapa;
-  int isi;
-  int kosong;
+  final int lantaiberapa;
   List floorList;
 
-  cekKamarDetail({this.floorList, this.lantaiberapa, this.isi, this.kosong});
+
+  cekKamarDetail({this.floorList, this.lantaiberapa});
 
   @override
-  _cekKamarDetailState createState() => _cekKamarDetailState();
+  _cekKamarDetailState createState() => _cekKamarDetailState(floorList);
 }
 
 class _cekKamarDetailState extends State<cekKamarDetail> {
+  int isii = 0;
+  int kosongg = 0;
+  List floorList;
+
+  _cekKamarDetailState(this.floorList);
+
+  void banyak(List a){
+    for (var dt in a)
+      if(dt['status'] == 'isi')
+        isii++;
+      else
+        kosongg++;
+  }
+
   bool cekIsi(var status){
     if(status == 'isi'){
       return true;
@@ -61,8 +74,13 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
       return false;
     }
   }
+
   @override
   Widget build(BuildContext context) {
+    List jumlah = List(2);
+    jumlah[0] = isii;
+    jumlah[1] = kosongg;
+    banyak(floorList);
     return Scaffold(
       backgroundColor: navy,
       body: SafeArea(
@@ -81,7 +99,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                         size: 30,
                       ),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, jumlah);
                       },
                     ),
                   ),
@@ -91,7 +109,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 20, 30),
                     child: Text(
-                      'Lantai ' + widget.lantaiberapa,
+                      'Lantai ' + widget.lantaiberapa.toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25,
@@ -111,7 +129,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        widget.isi.toString(),
+                        '$isii',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 50,
@@ -134,7 +152,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 Column(
                   children: <Widget>[
                     Text(
-                      widget.kosong.toString(),
+                      '$kosongg',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 50,

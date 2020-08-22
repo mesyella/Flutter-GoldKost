@@ -41,6 +41,8 @@ class _homePageState extends State<homePage> {
   List<Floor> _floorList;
   Query _floorQuery;
   StreamSubscription<Event> _onFloorAddedSubscription;
+  int totalIsi = 0;
+  int totalKosong = 0;
 
   onEntryAdded(Event floor) {
     setState(() {
@@ -56,20 +58,13 @@ class _homePageState extends State<homePage> {
     super.initState();
   }
 
-  int isi1 = 0;
-  int isi2 = 0;
-  int isi3 = 0;
-  int kosong1 = 0;
-  int kosong2 = 0;
-  int kosong3 = 0;
-  int totalIsi = 0;
-  int totalKosong = 0;
-
-  int countIsi(List room, int isi) {
+  int countIsi(List room, int isi, int kosong) {
     isi = 0;
     for (var dt in room) {
       if (dt['status'] == 'isi') {
         isi++;
+      } else if (dt['status'] == 'kosong') {
+        kosong++;
       }
     }
     return isi;
@@ -85,57 +80,51 @@ class _homePageState extends State<homePage> {
     return kosong;
   }
 
-  void banyakKamar() {
-    if (_floorList.length > 0) {
+  int banyakIsi(a) {
+    if (a.length > 0) {
       totalIsi = 0;
-      totalKosong = 0;
-      List room1 = _floorList[0].room;
-      List room2 = _floorList[1].room;
-      List room3 = _floorList[2].room;
-      isi1 = countIsi(room1, isi1);
-      isi2 = countIsi(room2, isi2);
-      isi3 = countIsi(room3, isi3);
-      kosong1 = countKosong(room1, kosong1);
-      kosong2 = countKosong(room2, kosong2);
-      kosong3 = countKosong(room3, kosong3);
-      totalIsi = isi1 + isi2 + isi3;
-      totalKosong = kosong1 + kosong2 + kosong3;
+      for (int i = 0; i < 3; i++) {
+        for (var dt in a[i]) {
+          if (dt['status'] == 'isi') {
+            totalIsi++;
+          }
+        }
+      }
     }
+    return totalIsi;
+  }
+
+  int banyakKosong(a) {
+    if (a.length > 0) {
+      totalKosong = 0;
+      for (int i = 0; i < 3; i++) {
+        for (var dt in a[i]) {
+          if (dt['status'] == 'kosong') {
+            totalKosong++;
+          }
+        }
+      }
+    }
+    return totalKosong;
   }
 
   Future moveToDetail(context, datas) async {
     var _datas = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            detailKamar(
-              datas: datas,
-            ),
-      ),);
+        builder: (context) => detailKamar(
+          datas: datas,
+        ),
+      ),
+    );
     updateData(_datas);
-    updateBanyakKamar();
   }
+
   void updateData(List _datas) {
     setState(() {
       _floorList = _datas;
-    });
-  }
-
-  void updateBanyakKamar(){
-    setState(() {
-      totalIsi = 0;
-      totalKosong = 0;
-      List room1 = _floorList[0].room;
-      List room2 = _floorList[1].room;
-      List room3 = _floorList[2].room;
-      isi1 = countIsi(room1, isi1);
-      isi2 = countIsi(room2, isi2);
-      isi3 = countIsi(room3, isi3);
-      kosong1 = countKosong(room1, kosong1);
-      kosong2 = countKosong(room2, kosong2);
-      kosong3 = countKosong(room3, kosong3);
-      totalIsi = isi1 + isi2 + isi3;
-      totalKosong = kosong1 + kosong2 + kosong3;
+      totalIsi = banyakIsi(_datas);
+      totalKosong = banyakKosong(_datas);
     });
   }
 
@@ -148,7 +137,8 @@ class _homePageState extends State<homePage> {
     datas[0] = floorList1;
     datas[1] = floorList2;
     datas[2] = floorList3;
-    banyakKamar();
+    totalIsi = banyakIsi(datas);
+    totalKosong = banyakKosong(datas);
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -269,15 +259,7 @@ class _homePageState extends State<homePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => cekKamar(
-                              floorList1: datas[0],
-                              floorList2: datas[1],
-                              flootList3: datas[2],
-                              isi1: isi1,
-                              isi2: isi2,
-                              isi3: isi3,
-                              kosong1: kosong1,
-                              kosong2: kosong2,
-                              kosong3: kosong3,
+                              floorList: datas,
                             ),
                           ),
                         );
