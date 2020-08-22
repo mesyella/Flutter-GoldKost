@@ -103,15 +103,51 @@ class _homePageState extends State<homePage> {
     }
   }
 
+  Future moveToDetail(context, datas) async {
+    var _datas = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            detailKamar(
+              datas: datas,
+            ),
+      ),);
+    updateData(_datas);
+    updateBanyakKamar();
+  }
+  void updateData(List _datas) {
+    setState(() {
+      _floorList = _datas;
+    });
+  }
+
+  void updateBanyakKamar(){
+    setState(() {
+      totalIsi = 0;
+      totalKosong = 0;
+      List room1 = _floorList[0].room;
+      List room2 = _floorList[1].room;
+      List room3 = _floorList[2].room;
+      isi1 = countIsi(room1, isi1);
+      isi2 = countIsi(room2, isi2);
+      isi3 = countIsi(room3, isi3);
+      kosong1 = countKosong(room1, kosong1);
+      kosong2 = countKosong(room2, kosong2);
+      kosong3 = countKosong(room3, kosong3);
+      totalIsi = isi1 + isi2 + isi3;
+      totalKosong = kosong1 + kosong2 + kosong3;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List floorList1 = _floorList[0].room;
     List floorList2 = _floorList[1].room;
     List floorList3 = _floorList[2].room;
-//    var datas = List(3);
-//    datas[0] = floorList1;
-//    datas[1] = floorList2;
-//    datas[2] = floorList3;
+    var datas = List(3);
+    datas[0] = floorList1;
+    datas[1] = floorList2;
+    datas[2] = floorList3;
     banyakKamar();
     return Scaffold(
       backgroundColor: white,
@@ -233,9 +269,9 @@ class _homePageState extends State<homePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => cekKamar(
-                              floorList1: floorList1,
-                              floorList2: floorList2,
-                              flootList3: floorList3,
+                              floorList1: datas[0],
+                              floorList2: datas[1],
+                              flootList3: datas[2],
                               isi1: isi1,
                               isi2: isi2,
                               isi3: isi3,
@@ -275,9 +311,7 @@ class _homePageState extends State<homePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => detailKamar(
-                              floorList1: floorList1,
-                              floorList2: floorList2,
-                              floorList3: floorList3,
+                              datas: datas,
                             ),
                           ),
                         );

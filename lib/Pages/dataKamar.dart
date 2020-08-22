@@ -111,12 +111,12 @@ class lantaiPage extends StatefulWidget {
 }
 
 class _lantaiPageState extends State<lantaiPage> {
+  List kamar = List(6);
   int room = 1;
   List floorList;
 
   _lantaiPageState(this.floorList);
 
-  List isi;
   String nama;
   String nomorTelepon;
   String mulaiSewa;
@@ -127,6 +127,8 @@ class _lantaiPageState extends State<lantaiPage> {
     nama = floorList[0]['name'].toString();
     nomorTelepon = floorList[0]['phone'].toString();
     mulaiSewa = floorList[0]['date'].toString();
+    status = floorList[0]['status'].toString();
+    floorList = floorList;
     super.initState();
   }
 
@@ -162,9 +164,39 @@ class _lantaiPageState extends State<lantaiPage> {
     });
   }
 
+  changeStatus(String a) {
+    setState(() {
+      status = a;
+    });
+  }
+
+  Future moveToEdit() async {
+    var _kamar = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => edit(kamar)));
+    updateKamar(_kamar);
+  }
+
+  void updateKamar(List _kamar) {
+    setState(() {
+      floorList[_kamar[1] - 1]['name'] = _kamar[2];
+      floorList[_kamar[1] - 1]['phone'] = _kamar[3];
+      floorList[_kamar[1] - 1]['date'] = _kamar[4];
+      floorList[_kamar[1] - 1]['status'] = _kamar[5];
+    });
+    changeData(_kamar[1]);
+    changeName(floorList[_kamar[1] - 1]['name'].toString());
+    changePhone(floorList[_kamar[1] - 1]['phone'].toString());
+    changeDate(floorList[_kamar[1] - 1]['date'].toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(floorList);
+    kamar[0] = widget.lantaiberapa;
+    kamar[1] = floorList[room - 1]['roomID'];
+    kamar[2] = floorList[room - 1]['name'].toString();
+    kamar[3] = floorList[room - 1]['phone'].toString();
+    kamar[4] = floorList[room - 1]['date'].toString();
+    kamar[5] = floorList[room - 1]['status'].toString();
     return Scaffold(
       backgroundColor: navy,
       body: SafeArea(
@@ -184,7 +216,7 @@ class _lantaiPageState extends State<lantaiPage> {
                         size: 30,
                       ),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, floorList);
                       },
                     ),
                   ),
@@ -220,77 +252,57 @@ class _lantaiPageState extends State<lantaiPage> {
                         children: <Widget>[
                           FlatButton(
                             child: detailKamar(
-                                '0' + widget.floorList[0]['roomID'].toString(),
-                                cekIsi(
-                                    widget.floorList[0]['status'].toString())),
+                                '0' + floorList[0]['roomID'].toString(),
+                                cekIsi(floorList[0]['status'].toString())),
                             onPressed: () {
                               changeData(1);
-                              changeName(
-                                  widget.floorList[0]['name'].toString());
-                              changePhone(
-                                  widget.floorList[0]['phone'].toString());
-                              changeDate(
-                                  widget.floorList[0]['date'].toString());
+                              changeName(floorList[0]['name'].toString());
+                              changePhone(floorList[0]['phone'].toString());
+                              changeDate(floorList[0]['date'].toString());
                             },
                           ),
                           FlatButton(
                             child: detailKamar(
-                                '0' + widget.floorList[1]['roomID'].toString(),
-                                cekIsi(
-                                    widget.floorList[1]['status'].toString())),
+                                '0' + floorList[1]['roomID'].toString(),
+                                cekIsi(floorList[1]['status'].toString())),
                             onPressed: () {
                               changeData(2);
-                              changeName(
-                                  widget.floorList[1]['name'].toString());
-                              changePhone(
-                                  widget.floorList[1]['phone'].toString());
-                              changeDate(
-                                  widget.floorList[1]['date'].toString());
+                              changeName(floorList[1]['name'].toString());
+                              changePhone(floorList[1]['phone'].toString());
+                              changeDate(floorList[1]['date'].toString());
                             },
                           ),
                           FlatButton(
                             child: detailKamar(
-                                '0' + widget.floorList[2]['roomID'].toString(),
-                                cekIsi(
-                                    widget.floorList[2]['status'].toString())),
+                                '0' + floorList[2]['roomID'].toString(),
+                                cekIsi(floorList[2]['status'].toString())),
                             onPressed: () {
                               changeData(3);
-                              changeName(
-                                  widget.floorList[2]['name'].toString());
-                              changePhone(
-                                  widget.floorList[2]['phone'].toString());
-                              changeDate(
-                                  widget.floorList[2]['date'].toString());
+                              changeName(floorList[2]['name'].toString());
+                              changePhone(floorList[2]['phone'].toString());
+                              changeDate(floorList[2]['date'].toString());
                             },
                           ),
                           FlatButton(
                             child: detailKamar(
-                                '0' + widget.floorList[3]['roomID'].toString(),
-                                cekIsi(
-                                    widget.floorList[3]['status'].toString())),
+                                '0' + floorList[3]['roomID'].toString(),
+                                cekIsi(floorList[3]['status'].toString())),
                             onPressed: () {
                               changeData(4);
-                              changeName(
-                                  widget.floorList[3]['name'].toString());
-                              changePhone(
-                                  widget.floorList[3]['phone'].toString());
-                              changeDate(
-                                  widget.floorList[3]['date'].toString());
+                              changeName(floorList[3]['name'].toString());
+                              changePhone(floorList[3]['phone'].toString());
+                              changeDate(floorList[3]['date'].toString());
                             },
                           ),
                           FlatButton(
                             child: detailKamar(
-                                '0' + widget.floorList[4]['roomID'].toString(),
-                                cekIsi(
-                                    widget.floorList[4]['status'].toString())),
+                                '0' + floorList[4]['roomID'].toString(),
+                                cekIsi(floorList[4]['status'].toString())),
                             onPressed: () {
                               changeData(5);
-                              changeName(
-                                  widget.floorList[4]['name'].toString());
-                              changePhone(
-                                  widget.floorList[4]['phone'].toString());
-                              changeDate(
-                                  widget.floorList[4]['date'].toString());
+                              changeName(floorList[4]['name'].toString());
+                              changePhone(floorList[4]['phone'].toString());
+                              changeDate(floorList[4]['date'].toString());
                             },
                           ),
                         ],
@@ -336,21 +348,7 @@ class _lantaiPageState extends State<lantaiPage> {
                           backgroundColor: navy,
                           child: Icon(Icons.edit),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => edit(
-                                      widget.lantaiberapa,
-                                      widget.floorList[room - 1]['roomID'],
-                                      widget.floorList[room - 1]['name']
-                                          .toString(),
-                                      widget.floorList[room - 1]['phone']
-                                          .toString(),
-                                      widget.floorList[room - 1]['date']
-                                          .toString(),
-                                      widget.floorList[room - 1]['status']
-                                          .toString())),
-                            );
+                            moveToEdit();
                           },
                         ),
                       ),

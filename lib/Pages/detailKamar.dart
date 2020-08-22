@@ -3,13 +3,41 @@ import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/homePage.dart';
 import 'package:goldkost/Pages/dataKamar.dart';
 
-class detailKamar extends StatelessWidget {
-  List floorList1;
-  List floorList2;
-  List floorList3;
-  detailKamar({this.floorList1, this.floorList2, this.floorList3});
+class detailKamar extends StatefulWidget {
+  List datas;
+
+  detailKamar({this.datas});
+
+  @override
+  _detailKamarState createState() => _detailKamarState(datas);
+}
+
+class _detailKamarState extends State<detailKamar> {
+  List datas;
+
+  _detailKamarState(this.datas);
+
+  Future moveToData(context, lantai) async {
+    var _datas = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => lantaiPage(
+                lantaiberapa: lantai,
+                floorList: datas[lantai-1],
+              )),
+    );
+    updateData(_datas, lantai);
+  }
+
+  void updateData(List _datas, lantai) {
+    setState(() {
+      datas[lantai-1] = _datas;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    String a = datas[0][0]['name'].toString();
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -28,7 +56,7 @@ class detailKamar extends StatelessWidget {
                         size: 30,
                       ),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, datas);
                       },
                     ),
                   ),
@@ -80,13 +108,7 @@ class detailKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('1'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => lantaiPage(
-                                    lantaiberapa: 1, floorList: floorList1,
-                                  )),
-                        );
+                        moveToData(context, 1);
                       },
                     ),
                   ),
@@ -95,13 +117,7 @@ class detailKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('2'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => lantaiPage(
-                                    lantaiberapa: 2, floorList: floorList2,
-                                  )),
-                        );
+                       moveToData(context, 2);
                       },
                     ),
                   ),
@@ -110,13 +126,7 @@ class detailKamar extends StatelessWidget {
                     child: InkWell(
                       child: pilihLantai('3'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => lantaiPage(
-                                    lantaiberapa: 3, floorList: floorList3,
-                                  )),
-                        );
+                       moveToData(context, 3);
                       },
                     ),
                   ),

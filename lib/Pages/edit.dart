@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-void saved(context) {
+void saved(context, kamar) {
   showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -59,7 +59,7 @@ void saved(context) {
                       ),
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.pop(context, kamar);
                       },
                     )
                   ],
@@ -69,7 +69,7 @@ void saved(context) {
       });
 }
 
-void deleted(context) {
+void deleted(context, kamar) {
   showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -131,7 +131,7 @@ void deleted(context) {
                       ),
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.pop(context, kamar);
                       },
                     )
                   ],
@@ -141,41 +141,37 @@ void deleted(context) {
       });
 }
 
-class edit extends StatefulWidget {
-  final int lantaiberapa;
-  int roomID;
-  String nama;
-  String nomorTelepon;
-  String mulaiSewa;
-  String status;
+final TextEditingController textController = new TextEditingController();
 
-  edit(this.lantaiberapa, this.roomID, this.nama, this.nomorTelepon,
-      this.mulaiSewa, this.status);
+class edit extends StatefulWidget {
+  List kamar;
+
+  edit(this.kamar);
 
   @override
-  _editState createState() =>
-      _editState(nama, nomorTelepon, mulaiSewa, lantaiberapa, roomID);
+  _editState createState() => _editState(kamar);
 }
 
 class _editState extends State<edit> {
+  List kamar;
   String nama;
   String nomorTelepon;
   String mulaiSewa;
   int lantaiBerapa;
   int roomID;
+
   final key = new GlobalKey<FormState>();
   final FirebaseDatabase db = FirebaseDatabase.instance;
 
-  _editState(this.nama, this.nomorTelepon, this.mulaiSewa, this.lantaiBerapa,
-      this.roomID);
+  _editState(this.kamar);
 
   @override
   void initState() {
-    nama = nama;
-    nomorTelepon = nomorTelepon;
-    mulaiSewa = mulaiSewa;
-    lantaiBerapa = lantaiBerapa - 1;
-    roomID = roomID - 1;
+    lantaiBerapa = kamar[0] - 1;
+    roomID = kamar[1] - 1;
+    nama = kamar[2];
+    nomorTelepon = kamar[3];
+    mulaiSewa = kamar[4];
     super.initState();
   }
 
@@ -209,7 +205,7 @@ class _editState extends State<edit> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 20, 20),
                     child: Text(
-                      'Lantai ' + widget.lantaiberapa.toString(),
+                      'Lantai ' + widget.kamar[0].toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25,
@@ -238,7 +234,7 @@ class _editState extends State<edit> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
                       child: Text(
-                        '0' + widget.roomID.toString(),
+                        '0' + widget.kamar[1].toString(),
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 50,
@@ -282,7 +278,7 @@ class _editState extends State<edit> {
                             return null;
                         },
                         onSaved: (value) {
-                          nama = value;
+                          kamar[2] = value;
                           db
                               .reference()
                               .child('floor/$lantaiBerapa/room/$roomID/name')
@@ -325,7 +321,7 @@ class _editState extends State<edit> {
                             return null;
                         },
                         onSaved: (value) {
-                          nomorTelepon = value;
+                          kamar[3] = value;
                           db
                               .reference()
                               .child('floor/$lantaiBerapa/room/$roomID/phone')
@@ -368,7 +364,7 @@ class _editState extends State<edit> {
                             return null;
                         },
                         onSaved: (value) {
-                          mulaiSewa = value;
+                          kamar[4] = value;
                           db
                               .reference()
                               .child('floor/$lantaiBerapa/room/$roomID/date')
@@ -386,9 +382,11 @@ class _editState extends State<edit> {
                               key.currentState.save();
                               db
                                   .reference()
-                                  .child('floor/$lantaiBerapa/room/$roomID/status')
+                                  .child(
+                                      'floor/$lantaiBerapa/room/$roomID/status')
                                   .set('isi');
-                              saved(context);
+                              kamar[5] = 'isi';
+                              saved(context, kamar);
                             }
                           });
                         },
@@ -430,7 +428,11 @@ class _editState extends State<edit> {
                               .reference()
                               .child('floor/$lantaiBerapa/room/$roomID/status')
                               .set('kosong');
-                          deleted(context);
+                          kamar[2] = '';
+                          kamar[3] = '';
+                          kamar[4] = '';
+                          kamar[5] = 'kosong';
+                          deleted(context, kamar);
                         },
                         child: Container(
                           height: 60,
