@@ -4,6 +4,16 @@ import 'package:goldkost/Pages/homePage.dart';
 import 'package:goldkost/Pages/cekKamarDetail.dart';
 
 class cekKamar extends StatelessWidget {
+  List floorList1;
+  List floorList2;
+  List flootList3;
+  int isi1 = 0;
+  int isi2 =0;
+  int isi3 =0;
+  int kosong1 = 0;
+  int kosong2 = 0;
+  int kosong3 = 0;
+  cekKamar({this.floorList1, this.floorList2, this.flootList3,this.isi1, this.isi2, this.isi3, this.kosong1, this.kosong2, this.kosong3});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +58,7 @@ class cekKamar extends StatelessWidget {
             ),
             Container(
               height: MediaQuery.of(context).size.height -
-                  0.16 * MediaQuery.of(context).size.height,
+                  0.167 * MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: navy,
@@ -80,7 +90,7 @@ class cekKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => cekKamarDetail(
-                                lantaiberapa: '1',
+                                lantaiberapa: '1', floorList: floorList1,isi: isi1, kosong: kosong1,
                               )),
                         );
                       },
@@ -95,7 +105,7 @@ class cekKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => cekKamarDetail(
-                                lantaiberapa: '2',
+                                lantaiberapa: '2',floorList: floorList2 ,isi: isi2, kosong: kosong2,
                               )),
                         );
                       },
@@ -110,7 +120,7 @@ class cekKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => cekKamarDetail(
-                                lantaiberapa: '3',
+                                lantaiberapa: '3',floorList: flootList3, isi: isi3, kosong: kosong3,
                               )),
                         );
                       },

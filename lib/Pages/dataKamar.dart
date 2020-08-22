@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/edit.dart';
 
-
-
-
 Widget detailKamar(String floor, bool isi) {
   return Container(
     height: 130,
@@ -28,7 +25,7 @@ Widget detailKamar(String floor, bool isi) {
   );
 }
 
-Widget name(String nama){
+Widget name(String nama) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -53,7 +50,7 @@ Widget name(String nama){
   );
 }
 
-Widget phone(String telpon){
+Widget phone(String telpon) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -78,7 +75,7 @@ Widget phone(String telpon){
   );
 }
 
-Widget tanggal(String tgl){
+Widget tanggal(String tgl) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -103,65 +100,71 @@ Widget tanggal(String tgl){
   );
 }
 
-Widget detailKamarChosen(floor) {
-  return Container(
-    height: 130,
-    width: 100,
-    decoration: BoxDecoration(
-      color: white,
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Center(
-      child: Text(
-        '$floor',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 50,
-          fontWeight: FontWeight.bold,
-          color: navy,
-        ),
-      ),
-    ),
-  );
-}
-
 class lantaiPage extends StatefulWidget {
-  final String lantaiberapa;
+  final int lantaiberapa;
+  List floorList;
 
-  lantaiPage({this.lantaiberapa});
+  lantaiPage({this.lantaiberapa, this.floorList});
 
   @override
-  _lantaiPageState createState() => _lantaiPageState();
+  _lantaiPageState createState() => _lantaiPageState(floorList);
 }
 
 class _lantaiPageState extends State<lantaiPage> {
-  String number = '01';
-  String nama = 'aaaaaa';
-  String nomorTelepon = '11111111';
-  String mulaiSewa = '1 Agustus 2020';
+  int room = 1;
+  List floorList;
 
-  changeData(String room) {
+  _lantaiPageState(this.floorList);
+
+  List isi;
+  String nama;
+  String nomorTelepon;
+  String mulaiSewa;
+  String status;
+
+  @override
+  void initState() {
+    nama = floorList[0]['name'].toString();
+    nomorTelepon = floorList[0]['phone'].toString();
+    mulaiSewa = floorList[0]['date'].toString();
+    super.initState();
+  }
+
+  bool cekIsi(var status) {
+    if (status == 'isi') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  changeData(int a) {
     setState(() {
-      number = room;
+      room = a;
     });
   }
+
   changeName(String a) {
     setState(() {
       nama = a;
     });
   }
+
   changePhone(String a) {
     setState(() {
       nomorTelepon = a;
     });
   }
-  changeDate(String a){
+
+  changeDate(String a) {
     setState(() {
       mulaiSewa = a;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    print(floorList);
     return Scaffold(
       backgroundColor: navy,
       body: SafeArea(
@@ -191,7 +194,7 @@ class _lantaiPageState extends State<lantaiPage> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                     child: Text(
-                      'Lantai ' + widget.lantaiberapa,
+                      'Lantai ' + widget.lantaiberapa.toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25,
@@ -216,69 +219,80 @@ class _lantaiPageState extends State<lantaiPage> {
                       child: Row(
                         children: <Widget>[
                           FlatButton(
-                            child: detailKamar('01', true),
+                            child: detailKamar(
+                                '0' + widget.floorList[0]['roomID'].toString(),
+                                cekIsi(
+                                    widget.floorList[0]['status'].toString())),
                             onPressed: () {
-                              //db.child('floor').set('');
-                              changeData('01');
-                              changeName('aaa');
-                              changePhone('1111');
-                              changeDate('1 Agustus 2020');
+                              changeData(1);
+                              changeName(
+                                  widget.floorList[0]['name'].toString());
+                              changePhone(
+                                  widget.floorList[0]['phone'].toString());
+                              changeDate(
+                                  widget.floorList[0]['date'].toString());
                             },
                           ),
                           FlatButton(
-                            child: detailKamar('02', false),
+                            child: detailKamar(
+                                '0' + widget.floorList[1]['roomID'].toString(),
+                                cekIsi(
+                                    widget.floorList[1]['status'].toString())),
                             onPressed: () {
-                              changeData('02');
-                              changeName('bbb');
-                              changePhone('2222');
-                              changeDate('2 Agustus 2020');
+                              changeData(2);
+                              changeName(
+                                  widget.floorList[1]['name'].toString());
+                              changePhone(
+                                  widget.floorList[1]['phone'].toString());
+                              changeDate(
+                                  widget.floorList[1]['date'].toString());
                             },
                           ),
                           FlatButton(
-                            child: detailKamar('03', true),
+                            child: detailKamar(
+                                '0' + widget.floorList[2]['roomID'].toString(),
+                                cekIsi(
+                                    widget.floorList[2]['status'].toString())),
                             onPressed: () {
-                              changeData('03');
-                              changeName('ccc');
-                              changePhone('333');
-                              changeDate('3 Agustus 2020');
+                              changeData(3);
+                              changeName(
+                                  widget.floorList[2]['name'].toString());
+                              changePhone(
+                                  widget.floorList[2]['phone'].toString());
+                              changeDate(
+                                  widget.floorList[2]['date'].toString());
                             },
                           ),
                           FlatButton(
-                            child: detailKamar('04', true),
+                            child: detailKamar(
+                                '0' + widget.floorList[3]['roomID'].toString(),
+                                cekIsi(
+                                    widget.floorList[3]['status'].toString())),
                             onPressed: () {
-                              changeData('04');
-                              changeName('dddd');
-                              changePhone('4444');
-                              changeDate('4 Agustus 2020');
+                              changeData(4);
+                              changeName(
+                                  widget.floorList[3]['name'].toString());
+                              changePhone(
+                                  widget.floorList[3]['phone'].toString());
+                              changeDate(
+                                  widget.floorList[3]['date'].toString());
                             },
                           ),
                           FlatButton(
-                            child: detailKamar('05', true),
+                            child: detailKamar(
+                                '0' + widget.floorList[4]['roomID'].toString(),
+                                cekIsi(
+                                    widget.floorList[4]['status'].toString())),
                             onPressed: () {
-                              changeData('05');
-                              changeName('eee');
-                              changePhone('5555');
-                              changeDate('5 Agustus 2020');
+                              changeData(5);
+                              changeName(
+                                  widget.floorList[4]['name'].toString());
+                              changePhone(
+                                  widget.floorList[4]['phone'].toString());
+                              changeDate(
+                                  widget.floorList[4]['date'].toString());
                             },
                           ),
-                          FlatButton(
-                            child: detailKamar('06', false),
-                            onPressed: () {
-                              changeData('06');
-                              changeName('fff');
-                              changePhone('66666');
-                              changeDate('6 Agustus 2020');
-                            },
-                          ),
-                          FlatButton(
-                            child: detailKamar('07', true),
-                            onPressed: () {
-                              changeData('07');
-                              changeName('ggg');
-                              changePhone('7777');
-                              changeDate('7 Agustus 2020');
-                            },
-                          )
                         ],
                       ),
                     ),
@@ -300,11 +314,11 @@ class _lantaiPageState extends State<lantaiPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30,20,0,0),
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
                   child: Stack(
                     children: <Widget>[
                       Text(
-                        '$number',
+                        '0' + room.toString(),
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 50,
@@ -312,11 +326,12 @@ class _lantaiPageState extends State<lantaiPage> {
                           color: navy,
                         ),
                       ),
-                      Positioned(top: 80,child: name('$nama')),
-                      Positioned(top: 170,child: phone('$nomorTelepon')),
-                      Positioned(top: 260,child: tanggal('$mulaiSewa')),
+                      Positioned(top: 80, child: name('$nama')),
+                      Positioned(top: 170, child: phone('$nomorTelepon')),
+                      Positioned(top: 260, child: tanggal('$mulaiSewa')),
                       Positioned(
                         bottom: 20,
+                        right: 20,
                         child: FloatingActionButton(
                           backgroundColor: navy,
                           child: Icon(Icons.edit),
@@ -324,16 +339,24 @@ class _lantaiPageState extends State<lantaiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      edit(widget.lantaiberapa, number)),
+                                  builder: (context) => edit(
+                                      widget.lantaiberapa,
+                                      widget.floorList[room - 1]['roomID'],
+                                      widget.floorList[room - 1]['name']
+                                          .toString(),
+                                      widget.floorList[room - 1]['phone']
+                                          .toString(),
+                                      widget.floorList[room - 1]['date']
+                                          .toString(),
+                                      widget.floorList[room - 1]['status']
+                                          .toString())),
                             );
                           },
                         ),
                       ),
                     ],
                   ),
-                )
-            ),
+                )),
           ],
         ),
       ),

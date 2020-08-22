@@ -39,16 +39,28 @@ Widget kamarCek(String nomor, bool isi) {
   );
 }
 
+
 class cekKamarDetail extends StatefulWidget {
   final String lantaiberapa;
+  int isi;
+  int kosong;
+  List floorList;
 
-  cekKamarDetail({this.lantaiberapa});
+  cekKamarDetail({this.floorList, this.lantaiberapa, this.isi, this.kosong});
 
   @override
   _cekKamarDetailState createState() => _cekKamarDetailState();
 }
 
 class _cekKamarDetailState extends State<cekKamarDetail> {
+  bool cekIsi(var status){
+    if(status == 'isi'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +111,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        '4',
+                        widget.isi.toString(),
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 50,
@@ -122,7 +134,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 Column(
                   children: <Widget>[
                     Text(
-                      '3',
+                      widget.kosong.toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 50,
@@ -157,7 +169,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30,70,0,0),
+                padding: const EdgeInsets.fromLTRB(30, 70, 0, 0),
                 child: Container(
                   height: 200,
                   child: ListView(
@@ -167,13 +179,11 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          kamarCek('01', false),
-                          kamarCek('02', true),
-                          kamarCek('03', true),
-                          kamarCek('04', true),
-                          kamarCek('05', false),
-                          kamarCek('06', true),
-                          kamarCek('07', false),
+                          kamarCek('0' + widget.floorList[0]['roomID'].toString(), cekIsi(widget.floorList[0]['status'].toString())),
+                          kamarCek('0' + widget.floorList[1]['roomID'].toString(), cekIsi(widget.floorList[1]['status'].toString())),
+                          kamarCek('0' + widget.floorList[2]['roomID'].toString(), cekIsi(widget.floorList[2]['status'].toString())),
+                          kamarCek('0' + widget.floorList[3]['roomID'].toString(), cekIsi(widget.floorList[3]['status'].toString())),
+                          kamarCek('0' + widget.floorList[4]['roomID'].toString(), cekIsi(widget.floorList[4]['status'].toString())),
                         ],
                       ),
                     ],

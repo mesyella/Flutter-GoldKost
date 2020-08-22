@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/detailKamar.dart';
 import 'package:goldkost/Pages/cekKamar.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:goldkost/Template/Floor.dart';
+
+final FirebaseDatabase db = FirebaseDatabase.instance;
 
 Widget pilihLantai(lantai) {
   return Container(
@@ -32,8 +38,81 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  List<Floor> _floorList;
+  Query _floorQuery;
+  StreamSubscription<Event> _onFloorAddedSubscription;
+
+  onEntryAdded(Event floor) {
+    setState(() {
+      _floorList.add(Floor.fromSnapshot(floor.snapshot));
+    });
+  }
+
+  @override
+  void initState() {
+    _floorList = new List();
+    _floorQuery = db.reference().child("floor").orderByChild("floorID");
+    _onFloorAddedSubscription = _floorQuery.onChildAdded.listen(onEntryAdded);
+    super.initState();
+  }
+
+  int isi1 = 0;
+  int isi2 = 0;
+  int isi3 = 0;
+  int kosong1 = 0;
+  int kosong2 = 0;
+  int kosong3 = 0;
+  int totalIsi = 0;
+  int totalKosong = 0;
+
+  int countIsi(List room, int isi) {
+    isi = 0;
+    for (var dt in room) {
+      if (dt['status'] == 'isi') {
+        isi++;
+      }
+    }
+    return isi;
+  }
+
+  int countKosong(List room, int kosong) {
+    kosong = 0;
+    for (var dt in room) {
+      if (dt['status'] == 'kosong') {
+        kosong++;
+      }
+    }
+    return kosong;
+  }
+
+  void banyakKamar() {
+    if (_floorList.length > 0) {
+      totalIsi = 0;
+      totalKosong = 0;
+      List room1 = _floorList[0].room;
+      List room2 = _floorList[1].room;
+      List room3 = _floorList[2].room;
+      isi1 = countIsi(room1, isi1);
+      isi2 = countIsi(room2, isi2);
+      isi3 = countIsi(room3, isi3);
+      kosong1 = countKosong(room1, kosong1);
+      kosong2 = countKosong(room2, kosong2);
+      kosong3 = countKosong(room3, kosong3);
+      totalIsi = isi1 + isi2 + isi3;
+      totalKosong = kosong1 + kosong2 + kosong3;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List floorList1 = _floorList[0].room;
+    List floorList2 = _floorList[1].room;
+    List floorList3 = _floorList[2].room;
+//    var datas = List(3);
+//    datas[0] = floorList1;
+//    datas[1] = floorList2;
+//    datas[2] = floorList3;
+    banyakKamar();
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -83,7 +162,7 @@ class _homePageState extends State<homePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '25',
+                              '$totalIsi',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontSize: 50,
@@ -106,7 +185,7 @@ class _homePageState extends State<homePage> {
                       Column(
                         children: <Widget>[
                           Text(
-                            '5',
+                            '$totalKosong',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 50,
@@ -149,11 +228,21 @@ class _homePageState extends State<homePage> {
                           ),
                         ),
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => cekKamar(),
+                            builder: (context) => cekKamar(
+                              floorList1: floorList1,
+                              floorList2: floorList2,
+                              flootList3: floorList3,
+                              isi1: isi1,
+                              isi2: isi2,
+                              isi3: isi3,
+                              kosong1: kosong1,
+                              kosong2: kosong2,
+                              kosong3: kosong3,
+                            ),
                           ),
                         );
                       },
@@ -185,7 +274,11 @@ class _homePageState extends State<homePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => detailKamar(),
+                            builder: (context) => detailKamar(
+                              floorList1: floorList1,
+                              floorList2: floorList2,
+                              floorList3: floorList3,
+                            ),
                           ),
                         );
                       },

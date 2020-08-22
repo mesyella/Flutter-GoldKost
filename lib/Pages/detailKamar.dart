@@ -4,6 +4,10 @@ import 'package:goldkost/Pages/homePage.dart';
 import 'package:goldkost/Pages/dataKamar.dart';
 
 class detailKamar extends StatelessWidget {
+  List floorList1;
+  List floorList2;
+  List floorList3;
+  detailKamar({this.floorList1, this.floorList2, this.floorList3});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +52,7 @@ class detailKamar extends StatelessWidget {
             ),
             Container(
               height: MediaQuery.of(context).size.height -
-                  0.16 * MediaQuery.of(context).size.height,
+                  0.167 * MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: navy,
@@ -80,7 +84,7 @@ class detailKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => lantaiPage(
-                                    lantaiberapa: '1',
+                                    lantaiberapa: 1, floorList: floorList1,
                                   )),
                         );
                       },
@@ -95,7 +99,7 @@ class detailKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => lantaiPage(
-                                    lantaiberapa: '2',
+                                    lantaiberapa: 2, floorList: floorList2,
                                   )),
                         );
                       },
@@ -110,7 +114,7 @@ class detailKamar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => lantaiPage(
-                                    lantaiberapa: '3',
+                                    lantaiberapa: 3, floorList: floorList3,
                                   )),
                         );
                       },
