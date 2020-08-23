@@ -11,26 +11,35 @@ Widget kamarCek(String nomor, bool isi) {
       ),
       height: 70,
       width: 320,
-      child: Row(
+      child: Stack(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 100, 0),
-            child: Text(
-              "Kamar $nomor",
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: white,
+           Align(
+             alignment: Alignment.centerLeft,
+             child: Padding(
+               padding: const EdgeInsets.only(left: 20),
+               child: Text(
+                  "Kamar $nomor",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: white,
+                  ),
+                ),
+             ),
+           ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: Container(
+                height: 20,
+                width: 20,
+                decoration: BoxDecoration(
+                  color: isi ? green : red,
+                  borderRadius: BorderRadius.circular(100),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 20,
-            width: 20,
-            decoration: BoxDecoration(
-              color: isi ? green : red,
-              borderRadius: BorderRadius.circular(100),
             ),
           ),
         ],
@@ -59,6 +68,8 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
   _cekKamarDetailState(this.floorList);
 
   void banyak(List a){
+    isii=0;
+    kosongg = 0;
     for (var dt in a)
       if(dt['status'] == 'isi')
         isii++;
@@ -178,7 +189,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
             ),
             Container(
               height: MediaQuery.of(context).size.height -
-                  0.293 * MediaQuery.of(context).size.height,
+                  0.323 * MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: white,
@@ -187,9 +198,9 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 70, 0, 0),
+                padding: const EdgeInsets.fromLTRB(30, 60, 0, 30),
                 child: Container(
-                  height: 200,
+                  height: 100,
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     physics: BouncingScrollPhysics(),
