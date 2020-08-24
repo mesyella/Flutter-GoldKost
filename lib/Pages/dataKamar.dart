@@ -100,6 +100,8 @@ Widget tanggal(String tgl) {
   );
 }
 
+
+
 class lantaiPage extends StatefulWidget {
   final int lantaiberapa;
   List floorList;
@@ -121,6 +123,7 @@ class _lantaiPageState extends State<lantaiPage> {
   String nomorTelepon;
   String mulaiSewa;
   String status;
+  String roomID;
 
   @override
   void initState() {
@@ -128,6 +131,7 @@ class _lantaiPageState extends State<lantaiPage> {
     nomorTelepon = floorList[0]['phone'].toString();
     mulaiSewa = floorList[0]['date'].toString();
     status = floorList[0]['status'].toString();
+    roomID = floorList[0]['roomID'].toString();
     floorList = floorList;
     super.initState();
   }
@@ -140,9 +144,9 @@ class _lantaiPageState extends State<lantaiPage> {
     }
   }
 
-  changeData(int a) {
+  changeRoomID(String a) {
     setState(() {
-      room = a;
+      roomID = a;
     });
   }
 
@@ -183,10 +187,24 @@ class _lantaiPageState extends State<lantaiPage> {
       floorList[_kamar[1] - 1]['date'] = _kamar[4];
       floorList[_kamar[1] - 1]['status'] = _kamar[5];
     });
-    changeData(_kamar[1]);
+    changeRoomID(floorList[_kamar[1] - 1]['roomID'].toString());
     changeName(floorList[_kamar[1] - 1]['name'].toString());
     changePhone(floorList[_kamar[1] - 1]['phone'].toString());
     changeDate(floorList[_kamar[1] - 1]['date'].toString());
+  }
+
+  Widget buttonRoom(int roomID, List floorList){
+    return  FlatButton(
+      child: detailKamar(
+          floorList[roomID-1]['roomID'].toString(),
+          cekIsi(floorList[roomID-1]['status'].toString())),
+      onPressed: () {
+        changeRoomID(floorList[roomID-1]['roomID'].toString());
+        changeName(floorList[roomID-1]['name'].toString());
+        changePhone(floorList[roomID-1]['phone'].toString());
+        changeDate(floorList[roomID-1]['date'].toString());
+      },
+    );
   }
 
   @override
@@ -243,72 +261,18 @@ class _lantaiPageState extends State<lantaiPage> {
               child: Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
-                  children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          FlatButton(
-                            child: detailKamar(
-                                '0' + floorList[0]['roomID'].toString(),
-                                cekIsi(floorList[0]['status'].toString())),
-                            onPressed: () {
-                              changeData(1);
-                              changeName(floorList[0]['name'].toString());
-                              changePhone(floorList[0]['phone'].toString());
-                              changeDate(floorList[0]['date'].toString());
-                            },
-                          ),
-                          FlatButton(
-                            child: detailKamar(
-                                '0' + floorList[1]['roomID'].toString(),
-                                cekIsi(floorList[1]['status'].toString())),
-                            onPressed: () {
-                              changeData(2);
-                              changeName(floorList[1]['name'].toString());
-                              changePhone(floorList[1]['phone'].toString());
-                              changeDate(floorList[1]['date'].toString());
-                            },
-                          ),
-                          FlatButton(
-                            child: detailKamar(
-                                '0' + floorList[2]['roomID'].toString(),
-                                cekIsi(floorList[2]['status'].toString())),
-                            onPressed: () {
-                              changeData(3);
-                              changeName(floorList[2]['name'].toString());
-                              changePhone(floorList[2]['phone'].toString());
-                              changeDate(floorList[2]['date'].toString());
-                            },
-                          ),
-                          FlatButton(
-                            child: detailKamar(
-                                '0' + floorList[3]['roomID'].toString(),
-                                cekIsi(floorList[3]['status'].toString())),
-                            onPressed: () {
-                              changeData(4);
-                              changeName(floorList[3]['name'].toString());
-                              changePhone(floorList[3]['phone'].toString());
-                              changeDate(floorList[3]['date'].toString());
-                            },
-                          ),
-                          FlatButton(
-                            child: detailKamar(
-                                '0' + floorList[4]['roomID'].toString(),
-                                cekIsi(floorList[4]['status'].toString())),
-                            onPressed: () {
-                              changeData(5);
-                              changeName(floorList[4]['name'].toString());
-                              changePhone(floorList[4]['phone'].toString());
-                              changeDate(floorList[4]['date'].toString());
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  itemCount: floorList.length,
+                  itemBuilder: (BuildContext context, int index){
+                    if(floorList.length > 0){
+                      return buttonRoom(index+1, floorList);
+                    }
+                    else{
+                      return Container();
+                    }
+                  },
                 ),
               ),
             ),
@@ -330,7 +294,7 @@ class _lantaiPageState extends State<lantaiPage> {
                   child: Stack(
                     children: <Widget>[
                       Text(
-                        '0' + room.toString(),
+                        '$roomID',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 50,
