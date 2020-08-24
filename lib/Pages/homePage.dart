@@ -9,29 +9,6 @@ import 'package:goldkost/Template/Floor.dart';
 
 final FirebaseDatabase db = FirebaseDatabase.instance;
 
-Widget pilihLantai(lantai) {
-  return Container(
-    child: Center(
-      child: Text(
-        'Lantai $lantai',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 25,
-          color: navy,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    height: 50,
-    width: 320,
-    decoration: BoxDecoration(
-      color: white,
-      borderRadius: BorderRadius.only(
-          topRight: Radius.circular(150), bottomRight: Radius.circular(150)),
-    ),
-  );
-}
-
 class homePage extends StatefulWidget {
   @override
   _homePageState createState() => _homePageState();
@@ -43,6 +20,7 @@ class _homePageState extends State<homePage> {
   StreamSubscription<Event> _onFloorAddedSubscription;
   int totalIsi = 0;
   int totalKosong = 0;
+  List Datas;
 
   onEntryAdded(Event floor) {
     setState(() {
@@ -58,11 +36,11 @@ class _homePageState extends State<homePage> {
     super.initState();
   }
 
-  int countIsi() {
-    if (_floorList.length > 0) {
+  int countIsi(a) {
+    if (a.length > 0) {
       totalIsi = 0;
       for (int i = 0; i < 3; i++) {
-        for (var dt in _floorList[i].room) {
+        for (var dt in a[i]) {
           if (dt['status'] == 'isi') {
             totalIsi++;
           }
@@ -72,11 +50,11 @@ class _homePageState extends State<homePage> {
     return totalIsi;
   }
 
-  int countKosong() {
-    if (_floorList.length > 0) {
+  int countKosong(a) {
+    if (a.length > 0) {
       totalKosong = 0;
       for (int i = 0; i < 3; i++) {
-        for (var dt in _floorList[i].room) {
+        for (var dt in a[i]) {
           if (dt['status'] == 'kosong') {
             totalKosong++;
           }
@@ -87,7 +65,9 @@ class _homePageState extends State<homePage> {
   }
 
   Widget showData() {
-    if (_floorList.length > 0)
+    if (_floorList.length > 0) {
+      totalIsi = countIsi(Datas);
+      totalKosong = countKosong(Datas);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -180,9 +160,10 @@ class _homePageState extends State<homePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => cekKamar(
-                      floorList: makeDatas(_floorList),
-                    ),
+                    builder: (context) =>
+                        cekKamar(
+                          floorList: Datas,
+                        ),
                   ),
                 );
               },
@@ -211,19 +192,13 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => detailKamar(
-                      datas: makeDatas(_floorList),
-                    ),
-                  ),
-                );
+                moveToDetail(context);
               },
             ),
           ),
         ],
       );
+    }
     else
       return Padding(
         padding: const EdgeInsets.only(top: 180.0),
@@ -252,12 +227,12 @@ class _homePageState extends State<homePage> {
       );
   }
 
-  Future moveToDetail(context, datas) async {
+  Future moveToDetail(context) async {
     var _datas = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => detailKamar(
-          datas: datas,
+          datas: Datas,
         ),
       ),
     );
@@ -266,11 +241,9 @@ class _homePageState extends State<homePage> {
 
   void updateData(List _datas) {
     setState(() {
-      _floorList = _datas;
-      totalIsi = 0;
-      totalKosong = 0;
-      totalIsi = countIsi();
-      totalKosong = countKosong();
+      Datas = _datas;
+      totalIsi = countIsi(_datas);
+      totalKosong = countKosong(_datas);
     });
   }
 
@@ -287,8 +260,7 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    totalIsi = countIsi();
-    totalKosong = countKosong();
+    Datas = makeDatas(_floorList);
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(

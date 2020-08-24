@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
-import 'package:goldkost/Pages/homePage.dart';
+import 'package:goldkost/Pages/detailKamar.dart';
 import 'package:goldkost/Pages/cekKamarDetail.dart';
 
 class cekKamar extends StatefulWidget {

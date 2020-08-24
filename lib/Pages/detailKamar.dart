@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
-import 'package:goldkost/Pages/homePage.dart';
 import 'package:goldkost/Pages/dataKamar.dart';
+
+Widget pilihLantai(lantai) {
+  return Container(
+    child: Center(
+      child: Text(
+        'Lantai $lantai',
+        style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 25,
+          color: navy,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    height: 50,
+    width: 320,
+    decoration: BoxDecoration(
+      color: white,
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(150), bottomRight: Radius.circular(150)),
+    ),
+  );
+}
 
 class detailKamar extends StatefulWidget {
   List datas;
