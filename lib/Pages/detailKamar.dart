@@ -59,7 +59,6 @@ class _detailKamarState extends State<detailKamar> {
 
   @override
   Widget build(BuildContext context) {
-    String a = datas[0][0]['name'].toString();
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(

@@ -114,7 +114,7 @@ class lantaiPage extends StatefulWidget {
 
 class _lantaiPageState extends State<lantaiPage> {
   List kamar = List(6);
-  int room = 1;
+  int room = 0;
   List floorList;
 
   _lantaiPageState(this.floorList);
@@ -142,6 +142,10 @@ class _lantaiPageState extends State<lantaiPage> {
     } else {
       return false;
     }
+  }
+
+  changeData(int a){
+    room = a;
   }
 
   changeRoomID(String a) {
@@ -176,7 +180,7 @@ class _lantaiPageState extends State<lantaiPage> {
 
   Future moveToEdit() async {
     var _kamar = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => edit(kamar)));
+        context, MaterialPageRoute(builder: (context) => edit(makeKamar(room))));
     updateKamar(_kamar);
   }
 
@@ -203,18 +207,24 @@ class _lantaiPageState extends State<lantaiPage> {
         changeName(floorList[roomID-1]['name'].toString());
         changePhone(floorList[roomID-1]['phone'].toString());
         changeDate(floorList[roomID-1]['date'].toString());
+        changeData(roomID-1);
       },
     );
   }
 
+  List makeKamar(room){
+    kamar[0] = widget.lantaiberapa;
+    kamar[1] = floorList[room ]['roomID'];
+    kamar[2] = floorList[room ]['name'].toString();
+    kamar[3] = floorList[room ]['phone'].toString();
+    kamar[4] = floorList[room ]['date'].toString();
+    kamar[5] = floorList[room ]['status'].toString();
+    return kamar;
+  }
+
   @override
   Widget build(BuildContext context) {
-    kamar[0] = widget.lantaiberapa;
-    kamar[1] = floorList[room - 1]['roomID'];
-    kamar[2] = floorList[room - 1]['name'].toString();
-    kamar[3] = floorList[room - 1]['phone'].toString();
-    kamar[4] = floorList[room - 1]['date'].toString();
-    kamar[5] = floorList[room - 1]['status'].toString();
+    kamar = makeKamar(room);
     return Scaffold(
       backgroundColor: navy,
       body: SafeArea(

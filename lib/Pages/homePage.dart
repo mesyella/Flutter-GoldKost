@@ -66,6 +66,7 @@ class _homePageState extends State<homePage> {
 
   Widget showData() {
     if (_floorList.length > 0) {
+      Datas = makeDatas(_floorList);
       totalIsi = countIsi(Datas);
       totalKosong = countKosong(Datas);
       return Column(
@@ -260,7 +261,6 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    Datas = makeDatas(_floorList);
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(

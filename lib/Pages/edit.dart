@@ -47,7 +47,7 @@ void saved(context, kamar) {
                         ),
                         child: Center(
                           child: Text(
-                            'okay',
+                            'Kembali',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 25,
@@ -111,15 +111,15 @@ void deleted(context, kamar) {
                     ),
                     FlatButton(
                       child: Container(
-                        width: 150,
-                        height: 40,
+                        width: 160,
+                        height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: navy,
                         ),
                         child: Center(
                           child: Text(
-                            'okay',
+                            'Kembali',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 25,

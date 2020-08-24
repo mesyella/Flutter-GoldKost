@@ -13,21 +13,21 @@ Widget kamarCek(String nomor, bool isi) {
       width: 320,
       child: Stack(
         children: <Widget>[
-           Align(
-             alignment: Alignment.centerLeft,
-             child: Padding(
-               padding: const EdgeInsets.only(left: 20),
-               child: Text(
-                  "Kamar $nomor",
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: white,
-                  ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                "Kamar $nomor",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: white,
                 ),
-             ),
-           ),
+              ),
+            ),
+          ),
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -48,11 +48,9 @@ Widget kamarCek(String nomor, bool isi) {
   );
 }
 
-
 class cekKamarDetail extends StatefulWidget {
   final int lantaiberapa;
   List floorList;
-
 
   cekKamarDetail({this.floorList, this.lantaiberapa});
 
@@ -67,21 +65,20 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
 
   _cekKamarDetailState(this.floorList);
 
-  void banyak(List a){
-    isii=0;
+  void banyak(List a) {
+    isii = 0;
     kosongg = 0;
     for (var dt in a)
-      if(dt['status'] == 'isi')
+      if (dt['status'] == 'isi')
         isii++;
       else
         kosongg++;
   }
 
-  bool cekIsi(var status){
-    if(status == 'isi'){
+  bool cekIsi(var status) {
+    if (status == 'isi') {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
@@ -198,25 +195,34 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 60, 0, 30),
+                padding: const EdgeInsets.fromLTRB(30, 60, 60, 30),
                 child: Container(
                   height: 100,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    physics: BouncingScrollPhysics(),
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          kamarCek('0' + widget.floorList[0]['roomID'].toString(), cekIsi(widget.floorList[0]['status'].toString())),
-                          kamarCek('0' + widget.floorList[1]['roomID'].toString(), cekIsi(widget.floorList[1]['status'].toString())),
-                          kamarCek('0' + widget.floorList[2]['roomID'].toString(), cekIsi(widget.floorList[2]['status'].toString())),
-                          kamarCek('0' + widget.floorList[3]['roomID'].toString(), cekIsi(widget.floorList[3]['status'].toString())),
-                          kamarCek('0' + widget.floorList[4]['roomID'].toString(), cekIsi(widget.floorList[4]['status'].toString())),
-                        ],
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: floorList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if(floorList.length>0){
+                          return kamarCek(floorList[index]['roomID'].toString(), cekIsi(floorList[index]['status'].toString()));
+                        }
+                        else{
+                          return Container();
+                        }
+                      }
+//                    children: <Widget>[
+//                      Column(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        children: <Widget>[
+//                          kamarCek('0' + widget.floorList[0]['roomID'].toString(), cekIsi(widget.floorList[0]['status'].toString())),
+//                          kamarCek('0' + widget.floorList[1]['roomID'].toString(), cekIsi(widget.floorList[1]['status'].toString())),
+//                          kamarCek('0' + widget.floorList[2]['roomID'].toString(), cekIsi(widget.floorList[2]['status'].toString())),
+//                          kamarCek('0' + widget.floorList[3]['roomID'].toString(), cekIsi(widget.floorList[3]['status'].toString())),
+//                          kamarCek('0' + widget.floorList[4]['roomID'].toString(), cekIsi(widget.floorList[4]['status'].toString())),
+//                        ],
+//                      ),
+//                    ],
                       ),
-                    ],
-                  ),
                 ),
               ),
             ),

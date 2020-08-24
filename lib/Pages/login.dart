@@ -79,8 +79,8 @@ class _loginState extends State<login> {
                             validator: (value) {
                               if (value.length < 0)
                                 return 'Invalid Username';
-//                              else if (value != 'goldKost1')
-//                                return 'Username not found';
+                              else if (value != 'goldKost1')
+                                return 'Username not found';
                               else
                                 return null;
                             },
@@ -119,8 +119,8 @@ class _loginState extends State<login> {
                             validator: (value) {
                               if (value.length < 0)
                                 return 'Invalid Password';
-//                              else if (value != 'goldKost123')
-//                                return 'Password incorrect';
+                              else if (value != 'goldKost123')
+                                return 'Password incorrect';
                               else
                                 return null;
                             },
