@@ -129,7 +129,7 @@ class _lantaiPageState extends State<lantaiPage> {
           'Nama:',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: navy,
           ),
@@ -154,7 +154,7 @@ class _lantaiPageState extends State<lantaiPage> {
           'Nomor Telepon:',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: navy,
           ),
@@ -179,7 +179,7 @@ class _lantaiPageState extends State<lantaiPage> {
           'Mulai sewa:',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: navy,
           ),
@@ -242,7 +242,7 @@ class _lantaiPageState extends State<lantaiPage> {
                         child: Icon(
                           Icons.arrow_back_ios,
                           color: white,
-                          size: 20,
+                          size: 25,
                         ),
                         onTap: () {
                           Navigator.pop(context, floorList);
@@ -269,7 +269,7 @@ class _lantaiPageState extends State<lantaiPage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
@@ -292,7 +292,7 @@ class _lantaiPageState extends State<lantaiPage> {
             ),
             Container(
                 height: MediaQuery.of(context).size.height -
-                    0.41 * MediaQuery.of(context).size.height,
+                    0.38 * MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: white,
@@ -308,7 +308,7 @@ class _lantaiPageState extends State<lantaiPage> {
                         '$roomID',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 50,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: navy,
                         ),

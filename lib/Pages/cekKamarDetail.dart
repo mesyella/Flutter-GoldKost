@@ -100,7 +100,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: white,
-                        size: 20,
+                        size: 25,
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -182,7 +182,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
             ),
             Container(
               height: MediaQuery.of(context).size.height -
-                  0.323 * MediaQuery.of(context).size.height,
+                  0.28 * MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: white,

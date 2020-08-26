@@ -29,7 +29,7 @@ class _cekKamarState extends State<cekKamar> {
 
   Widget pilihLantai(int lantai) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 30, 90, 0),
+      padding: const EdgeInsets.fromLTRB(30, 30, 70, 0),
       child: InkWell(
         child: Container(
           child: Center(
@@ -76,7 +76,7 @@ class _cekKamarState extends State<cekKamar> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: navy,
-                        size: 20,
+                        size: 25,
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -103,7 +103,7 @@ class _cekKamarState extends State<cekKamar> {
             ),
             Container(
               height: MediaQuery.of(context).size.height -
-                  0.167 * MediaQuery.of(context).size.height,
+                  0.16 * MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: navy,

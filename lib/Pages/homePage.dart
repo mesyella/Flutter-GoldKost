@@ -221,7 +221,7 @@ class _homePageState extends State<homePage> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: navy,
-                        size: 20,
+                        size: 25,
                       ),
                       onTap: () {
                         Navigator.pop(context);

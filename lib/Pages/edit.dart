@@ -71,30 +71,33 @@ class _editState extends State<edit> {
                       SizedBox(
                         height: 30,
                       ),
-                      FlatButton(
-                        child: Container(
-                          width: 150,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: navy,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Kembali',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: white,
+                      WillPopScope(
+                        onWillPop: () async => false,
+                        child: FlatButton(
+                          child: Container(
+                            width: 150,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: navy,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Kembali',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: white,
+                                ),
                               ),
                             ),
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context, kamar);
+                          },
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context, kamar);
-                        },
                       )
                     ],
                   ),
@@ -143,30 +146,33 @@ class _editState extends State<edit> {
                       SizedBox(
                         height: 30,
                       ),
-                      FlatButton(
-                        child: Container(
-                          width: 160,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: navy,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Kembali',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: white,
+                      WillPopScope(
+                        onWillPop: () async => false,
+                        child: FlatButton(
+                          child: Container(
+                            width: 160,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: navy,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Kembali',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: white,
+                                ),
                               ),
                             ),
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context, kamar);
+                          },
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context, kamar);
-                        },
                       )
                     ],
                   ),
@@ -193,7 +199,7 @@ class _editState extends State<edit> {
                         child: Icon(
                           Icons.arrow_back_ios,
                           color: navy,
-                          size: 20,
+                          size: 25,
                         ),
                         onTap: () {
                           Navigator.pop(context);
@@ -220,7 +226,7 @@ class _editState extends State<edit> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height -
-                    0.123 * MediaQuery.of(context).size.height,
+                    0.11 * MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: navy,
@@ -251,7 +257,7 @@ class _editState extends State<edit> {
                           'Nama:',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: white,
                           ),
@@ -295,7 +301,7 @@ class _editState extends State<edit> {
                           'Nomor Telepon:',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: white,
                           ),
@@ -339,7 +345,7 @@ class _editState extends State<edit> {
                           'Mulai Sewa:',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: white,
                           ),
