@@ -82,15 +82,18 @@ class _detailKamarState extends State<detailKamar> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 0, 50),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: navy,
-                        size: 20,
+                    child: WillPopScope(
+                      onWillPop: () async => false,
+                      child: InkWell(
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: navy,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, datas);
+                        },
                       ),
-                      onTap: () {
-                        Navigator.pop(context, datas);
-                      },
                     ),
                   ),
                 ),

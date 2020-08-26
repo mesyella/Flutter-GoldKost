@@ -236,15 +236,18 @@ class _lantaiPageState extends State<lantaiPage> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: white,
-                        size: 20,
+                    child: WillPopScope(
+                      onWillPop: () async => false,
+                      child: InkWell(
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: white,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, floorList);
+                        },
                       ),
-                      onTap: () {
-                        Navigator.pop(context, floorList);
-                      },
                     ),
                   ),
                 ),
