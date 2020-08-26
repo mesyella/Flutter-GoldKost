@@ -1,43 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
-import 'package:goldkost/Pages/detailKamar.dart';
 import 'package:goldkost/Pages/cekKamarDetail.dart';
 
 class cekKamar extends StatefulWidget {
   List floorList;
+
   cekKamar({this.floorList});
+
   @override
   _cekKamarState createState() => _cekKamarState(floorList);
 }
 
 class _cekKamarState extends State<cekKamar> {
   List floorList;
-  List floorList1;
-  List floorList2;
-  List flootList3;
+
   _cekKamarState(this.floorList);
-  List jumlahSemua = List(3);
-  int isi;
-  int kosong;
 
   Future moveToCekKamarDetail(context, i) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              cekKamarDetail(
-                lantaiberapa: i, floorList: floorList[i - 1],
+          builder: (context) => cekKamarDetail(
+                lantaiberapa: i,
+                floorList: floorList[i - 1]['room'],
               )),
     );
   }
 
-
-  @override
-  void initState() {
-     floorList1 = floorList[0];
-     floorList2 = floorList[1];
-     flootList3 = floorList[2];
-    super.initState();
+  Widget pilihLantai(int lantai) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 30, 90, 0),
+      child: InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              'Lantai $lantai',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 20,
+                color: navy,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          height: 40,
+          width: 270,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(150),
+                bottomRight: Radius.circular(150)),
+          ),
+        ),
+        onTap: () {
+          moveToCekKamarDetail(context, lantai);
+        },
+      ),
+    );
   }
 
   @override
@@ -57,7 +76,7 @@ class _cekKamarState extends State<cekKamar> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: navy,
-                        size: 30,
+                        size: 20,
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -73,7 +92,7 @@ class _cekKamarState extends State<cekKamar> {
                       'Gold Kost',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: navy,
                       ),
@@ -101,36 +120,22 @@ class _cekKamarState extends State<cekKamar> {
                       'Cek Kamar',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: white,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('1'),
-                      onTap: () {
-                        moveToCekKamarDetail(context, 1);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('2'),
-                      onTap: () {
-                        moveToCekKamarDetail(context, 2);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('3'),
-                      onTap: () {
-                        moveToCekKamarDetail(context, 3);
+                  Container(
+                    height: 300,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: floorList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (floorList.length > 0) {
+                          return pilihLantai(index + 1);
+                        }
                       },
                     ),
                   ),
@@ -143,5 +148,3 @@ class _cekKamarState extends State<cekKamar> {
     );
   }
 }
-
-

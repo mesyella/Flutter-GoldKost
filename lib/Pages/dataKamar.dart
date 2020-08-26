@@ -2,128 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/edit.dart';
 
-Widget detailKamar(String floor, bool isi) {
-  return Container(
-    height: 130,
-    width: 100,
-    decoration: BoxDecoration(
-      color: navy,
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: isi ? green : red, width: 5),
-    ),
-    child: Center(
-      child: Text(
-        '$floor',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 50,
-          fontWeight: FontWeight.bold,
-          color: white,
-        ),
-      ),
-    ),
-  );
-}
-
-Widget name(String nama) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        'Nama:',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: navy,
-        ),
-      ),
-      Text(
-        '$nama',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 25,
-          color: navy,
-        ),
-      ),
-    ],
-  );
-}
-
-Widget phone(String telpon) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        'Nomor Telepon:',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: navy,
-        ),
-      ),
-      Text(
-        '$telpon',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 25,
-          color: navy,
-        ),
-      ),
-    ],
-  );
-}
-
-Widget tanggal(String tgl) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        'Mulai sewa:',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: navy,
-        ),
-      ),
-      Text(
-        '$tgl',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 25,
-          color: navy,
-        ),
-      ),
-    ],
-  );
-}
-
-
-
 class lantaiPage extends StatefulWidget {
   final int lantaiberapa;
   List floorList;
+  String gk;
 
-  lantaiPage({this.lantaiberapa, this.floorList});
+  lantaiPage({this.lantaiberapa, this.floorList, this.gk});
 
   @override
-  _lantaiPageState createState() => _lantaiPageState(floorList);
+  _lantaiPageState createState() => _lantaiPageState(floorList, gk);
 }
 
 class _lantaiPageState extends State<lantaiPage> {
-  List kamar = List(6);
-  int room = 0;
   List floorList;
-
-  _lantaiPageState(this.floorList);
-
+  List kamar = List(7);
+  int index = 0;
+  String gk;
   String nama;
   String nomorTelepon;
   String mulaiSewa;
   String status;
   String roomID;
+
+  _lantaiPageState(this.floorList, this.gk);
 
   @override
   void initState() {
@@ -144,8 +45,8 @@ class _lantaiPageState extends State<lantaiPage> {
     }
   }
 
-  changeData(int a){
-    room = a;
+  changeData(int a) {
+    index = a;
   }
 
   changeRoomID(String a) {
@@ -180,51 +81,149 @@ class _lantaiPageState extends State<lantaiPage> {
 
   Future moveToEdit() async {
     var _kamar = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => edit(makeKamar(room))));
+        context, MaterialPageRoute(builder: (context) => edit(kamar, gk)));
     updateKamar(_kamar);
   }
 
   void updateKamar(List _kamar) {
     setState(() {
-      floorList[_kamar[1] - 1]['name'] = _kamar[2];
-      floorList[_kamar[1] - 1]['phone'] = _kamar[3];
-      floorList[_kamar[1] - 1]['date'] = _kamar[4];
-      floorList[_kamar[1] - 1]['status'] = _kamar[5];
+      floorList[_kamar[6]]['name'] = _kamar[2];
+      floorList[_kamar[6]]['phone'] = _kamar[3];
+      floorList[_kamar[6]]['date'] = _kamar[4];
+      floorList[_kamar[6]]['status'] = _kamar[5];
     });
-    changeRoomID(floorList[_kamar[1] - 1]['roomID'].toString());
-    changeName(floorList[_kamar[1] - 1]['name'].toString());
-    changePhone(floorList[_kamar[1] - 1]['phone'].toString());
-    changeDate(floorList[_kamar[1] - 1]['date'].toString());
+    changeRoomID(floorList[_kamar[6]]['roomID'].toString());
+    changeName(floorList[_kamar[6]]['name'].toString());
+    changePhone(floorList[_kamar[6]]['phone'].toString());
+    changeDate(floorList[_kamar[6]]['date'].toString());
   }
 
-  Widget buttonRoom(int roomID, List floorList){
-    return  FlatButton(
-      child: detailKamar(
-          floorList[roomID-1]['roomID'].toString(),
-          cekIsi(floorList[roomID-1]['status'].toString())),
+  Widget detailKamar(String floor, bool isi) {
+    return Container(
+      height: 130,
+      width: 100,
+      decoration: BoxDecoration(
+        color: navy,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: isi ? green : red, width: 5),
+      ),
+      child: Center(
+        child: Text(
+          '$floor',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            color: white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget name(String nama) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Nama:',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: navy,
+          ),
+        ),
+        Text(
+          '$nama',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 20,
+            color: navy,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget phone(String telpon) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Nomor Telepon:',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: navy,
+          ),
+        ),
+        Text(
+          '$telpon',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 20,
+            color: navy,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget tanggal(String tgl) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Mulai sewa:',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: navy,
+          ),
+        ),
+        Text(
+          '$tgl',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 20,
+            color: navy,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buttonRoom(int index, List floorList) {
+    return FlatButton(
+      child: detailKamar(floorList[index]['roomID'].toString(),
+          cekIsi(floorList[index]['status'].toString())),
       onPressed: () {
-        changeRoomID(floorList[roomID-1]['roomID'].toString());
-        changeName(floorList[roomID-1]['name'].toString());
-        changePhone(floorList[roomID-1]['phone'].toString());
-        changeDate(floorList[roomID-1]['date'].toString());
-        changeData(roomID-1);
+        changeRoomID(floorList[index]['roomID'].toString());
+        changeName(floorList[index]['name'].toString());
+        changePhone(floorList[index]['phone'].toString());
+        changeDate(floorList[index]['date'].toString());
+        changeData(index);
       },
     );
   }
 
-  List makeKamar(room){
+  List makeKamar(room) {
     kamar[0] = widget.lantaiberapa;
-    kamar[1] = floorList[room ]['roomID'];
-    kamar[2] = floorList[room ]['name'].toString();
-    kamar[3] = floorList[room ]['phone'].toString();
-    kamar[4] = floorList[room ]['date'].toString();
-    kamar[5] = floorList[room ]['status'].toString();
+    kamar[1] = floorList[room]['roomID'];
+    kamar[2] = floorList[room]['name'].toString();
+    kamar[3] = floorList[room]['phone'].toString();
+    kamar[4] = floorList[room]['date'].toString();
+    kamar[5] = floorList[room]['status'].toString();
+    kamar[6] = room;
     return kamar;
   }
 
   @override
   Widget build(BuildContext context) {
-    kamar = makeKamar(room);
+    kamar = makeKamar(index);
     return Scaffold(
       backgroundColor: navy,
       body: SafeArea(
@@ -241,7 +240,7 @@ class _lantaiPageState extends State<lantaiPage> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: white,
-                        size: 30,
+                        size: 20,
                       ),
                       onTap: () {
                         Navigator.pop(context, floorList);
@@ -257,7 +256,7 @@ class _lantaiPageState extends State<lantaiPage> {
                       'Lantai ' + widget.lantaiberapa.toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: white,
                       ),
@@ -275,11 +274,10 @@ class _lantaiPageState extends State<lantaiPage> {
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   itemCount: floorList.length,
-                  itemBuilder: (BuildContext context, int index){
-                    if(floorList.length > 0){
-                      return buttonRoom(index+1, floorList);
-                    }
-                    else{
+                  itemBuilder: (BuildContext context, int index) {
+                    if (floorList.length > 0) {
+                      return buttonRoom(index, floorList);
+                    } else {
                       return Container();
                     }
                   },

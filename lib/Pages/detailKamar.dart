@@ -2,42 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 import 'package:goldkost/Pages/dataKamar.dart';
 
-Widget pilihLantai(lantai) {
-  return Container(
-    child: Center(
-      child: Text(
-        'Lantai $lantai',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 25,
-          color: navy,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    height: 50,
-    width: 320,
-    decoration: BoxDecoration(
-      color: white,
-      borderRadius: BorderRadius.only(
-          topRight: Radius.circular(150), bottomRight: Radius.circular(150)),
-    ),
-  );
-}
-
 class detailKamar extends StatefulWidget {
   List datas;
+  String gk;
 
-  detailKamar({this.datas});
+  detailKamar({this.datas, this.gk});
 
   @override
-  _detailKamarState createState() => _detailKamarState(datas);
+  _detailKamarState createState() => _detailKamarState(datas, gk);
 }
 
 class _detailKamarState extends State<detailKamar> {
   List datas;
+  String gk;
 
-  _detailKamarState(this.datas);
+  _detailKamarState(this.datas, this.gk);
 
   Future moveToData(context, lantai) async {
     var _datas = await Navigator.push(
@@ -45,7 +24,8 @@ class _detailKamarState extends State<detailKamar> {
       MaterialPageRoute(
           builder: (context) => lantaiPage(
                 lantaiberapa: lantai,
-                floorList: datas[lantai-1],
+                floorList: datas[lantai - 1]['room'],
+                gk: gk,
               )),
     );
     updateData(_datas, lantai);
@@ -53,8 +33,40 @@ class _detailKamarState extends State<detailKamar> {
 
   void updateData(List _datas, lantai) {
     setState(() {
-      datas[lantai-1] = _datas;
+      datas[lantai - 1]['room'] = _datas;
     });
+  }
+
+  Widget pilihLantai(int lantai) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 30, 90, 0),
+      child: InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              'Lantai $lantai',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 20,
+                color: navy,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          height: 40,
+          width: 270,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(150),
+                bottomRight: Radius.circular(150)),
+          ),
+        ),
+        onTap: () {
+          moveToData(context, lantai);
+        },
+      ),
+    );
   }
 
   @override
@@ -74,7 +86,7 @@ class _detailKamarState extends State<detailKamar> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: navy,
-                        size: 30,
+                        size: 20,
                       ),
                       onTap: () {
                         Navigator.pop(context, datas);
@@ -90,7 +102,7 @@ class _detailKamarState extends State<detailKamar> {
                       'Gold Kost',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: navy,
                       ),
@@ -118,39 +130,23 @@ class _detailKamarState extends State<detailKamar> {
                       'Daftar Kamar',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: white,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('1'),
-                      onTap: () {
-                        moveToData(context, 1);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('2'),
-                      onTap: () {
-                       moveToData(context, 2);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 50, 0, 0),
-                    child: InkWell(
-                      child: pilihLantai('3'),
-                      onTap: () {
-                       moveToData(context, 3);
-                      },
-                    ),
-                  ),
+                  Container(
+                      height: 300,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: datas.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (datas.length > 0) {
+                              return pilihLantai(index + 1);
+                            }
+                          })),
                 ],
               ),
             )

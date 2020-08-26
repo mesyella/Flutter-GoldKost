@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goldkost/Pages/login.dart';
+import 'package:goldkost/Pages/chooseKost.dart';
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: login(),
+      home: chooseKost(),
     );
   }
 }

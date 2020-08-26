@@ -1,53 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goldkost/Template/colors.dart';
 
-Widget kamarCek(String nomor, bool isi) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 20),
-    child: Container(
-      decoration: BoxDecoration(
-        color: navy,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      height: 70,
-      width: 320,
-      child: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Kamar $nomor",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: white,
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 30),
-              child: Container(
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                  color: isi ? green : red,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 class cekKamarDetail extends StatefulWidget {
   final int lantaiberapa;
   List floorList;
@@ -59,20 +12,20 @@ class cekKamarDetail extends StatefulWidget {
 }
 
 class _cekKamarDetailState extends State<cekKamarDetail> {
-  int isii = 0;
-  int kosongg = 0;
+  int isi = 0;
+  int kosong = 0;
   List floorList;
 
   _cekKamarDetailState(this.floorList);
 
   void banyak(List a) {
-    isii = 0;
-    kosongg = 0;
+    isi = 0;
+    kosong = 0;
     for (var dt in a)
       if (dt['status'] == 'isi')
-        isii++;
+        isi++;
       else
-        kosongg++;
+        kosong++;
   }
 
   bool cekIsi(var status) {
@@ -83,11 +36,54 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
     }
   }
 
+  Widget kamarCek(String nomor, bool isi) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: navy,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 40,
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  "Kamar $nomor",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: white,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 30),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  decoration: BoxDecoration(
+                    color: isi ? green : red,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    List jumlah = List(2);
-    jumlah[0] = isii;
-    jumlah[1] = kosongg;
     banyak(floorList);
     return Scaffold(
       backgroundColor: navy,
@@ -104,10 +100,10 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: white,
-                        size: 30,
+                        size: 20,
                       ),
                       onTap: () {
-                        Navigator.pop(context, jumlah);
+                        Navigator.pop(context);
                       },
                     ),
                   ),
@@ -120,7 +116,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       'Lantai ' + widget.lantaiberapa.toString(),
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: white,
                       ),
@@ -137,10 +133,10 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        '$isii',
+                        '$isi',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 50,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: green,
                         ),
@@ -149,7 +145,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                         'terisi',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 20,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                           color: green,
                         ),
@@ -160,10 +156,10 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 Column(
                   children: <Widget>[
                     Text(
-                      '$kosongg',
+                      '$kosong',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 50,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: red,
                       ),
@@ -172,7 +168,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       'kosong',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 20,
+                        fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: red,
                       ),
@@ -195,7 +191,7 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 60, 60, 30),
+                padding: const EdgeInsets.fromLTRB(30, 60, 90, 30),
                 child: Container(
                   height: 100,
                   child: ListView.builder(
@@ -203,26 +199,13 @@ class _cekKamarDetailState extends State<cekKamarDetail> {
                       physics: BouncingScrollPhysics(),
                       itemCount: floorList.length,
                       itemBuilder: (BuildContext context, int index) {
-                        if(floorList.length>0){
-                          return kamarCek(floorList[index]['roomID'].toString(), cekIsi(floorList[index]['status'].toString()));
-                        }
-                        else{
+                        if (floorList.length > 0) {
+                          return kamarCek(floorList[index]['roomID'].toString(),
+                              cekIsi(floorList[index]['status'].toString()));
+                        } else {
                           return Container();
                         }
-                      }
-//                    children: <Widget>[
-//                      Column(
-//                        crossAxisAlignment: CrossAxisAlignment.start,
-//                        children: <Widget>[
-//                          kamarCek('0' + widget.floorList[0]['roomID'].toString(), cekIsi(widget.floorList[0]['status'].toString())),
-//                          kamarCek('0' + widget.floorList[1]['roomID'].toString(), cekIsi(widget.floorList[1]['status'].toString())),
-//                          kamarCek('0' + widget.floorList[2]['roomID'].toString(), cekIsi(widget.floorList[2]['status'].toString())),
-//                          kamarCek('0' + widget.floorList[3]['roomID'].toString(), cekIsi(widget.floorList[3]['status'].toString())),
-//                          kamarCek('0' + widget.floorList[4]['roomID'].toString(), cekIsi(widget.floorList[4]['status'].toString())),
-//                        ],
-//                      ),
-//                    ],
-                      ),
+                      }),
                 ),
               ),
             ),
