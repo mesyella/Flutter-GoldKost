@@ -1,4 +1,4 @@
-# goldkost
+# Gold kost Application
 
 This is an application to manage kost by showing the status of the room and the detail of the person who rent it.
 
