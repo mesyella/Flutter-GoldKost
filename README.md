@@ -10,3 +10,12 @@ Latest Version of Android Studio: https://developer.android.com/studio
 ### Built with
 Flutter - Flutter as Frontend
 Firebase - Firebase as Backend
+
+### Screenshots of app running
+<img src="/assets/Screenshot/1.jpg" alt="drawing" width="200"/> <img src="/assets/Screenshot/2.png" alt="drawing" width="200"/>
+<img src="/assets/Screenshot/2.jpg" alt="drawing" width="200"/> <img src="/assets/Screenshot/4.png" alt="drawing" width="200"/>
+
+
+<img src="/assets/Screenshot/3.jpg" alt="drawing" width="200"/> <img src="/assets/Screenshot/6.png" alt="drawing" width="200"/>
+<img src="/assets/Screenshot/4.jpg" alt="drawing" width="200"/> <img src="/assets/Screenshot/8.png" alt="drawing" width="200"/>
+<img src="/assets/Screenshot/5.jpg" alt="drawing" width="200"/> <img src="/assets/Screenshot/8.png" alt="drawing" width="200"/>
